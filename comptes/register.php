@@ -3,7 +3,6 @@
 	require "function.php";
 ?>
 
-
 <!doctype html>
 <html lang="fr">
     
