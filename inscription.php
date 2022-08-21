@@ -29,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $erreurs = $result['erreurs'];
     }
 }
-
 ?>
 
 <section class="vh-100" style="background-color: #eee;">
