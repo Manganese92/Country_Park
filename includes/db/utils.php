@@ -12,4 +12,8 @@ function get_connexion_pdo(){
 	return $pdo;
 }
 
+function is_user_connected() {
+    return isset($_SESSION['id']) && isset($_SESSION['email']);
+}
+
 ?>
