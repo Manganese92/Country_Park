@@ -25,13 +25,10 @@ function createToken(){
 	return $token;
 }
 
-
 function updateToken($userId, $token){
-
 	$pdo = connectDB();
 	$queryPrepared = $pdo->prepare("UPDATE iw_user SET token=:token WHERE id=:id");
 	$queryPrepared->execute(["token"=>$token, "id"=>$userId]);
-
 }
 
 
