@@ -1,5 +1,5 @@
 <?php
-require "utils.php";
+require_once "utils.php";
 
 function get_all_biens() {
     $pdo = get_connexion_pdo();
