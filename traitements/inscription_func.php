@@ -46,3 +46,38 @@ function traiter_inscription($nom, $email, $motdepasse) {
     }
     return array();
 }
+
+
+// Récupération des variables nécessaires au mail de confirmation    
+$email = $_POST['mail'];
+$login = $_POST['login'];
+ 
+// Génération aléatoire d'une clé
+$cle = md5(microtime(TRUE)*100000);
+ 
+ 
+// Insertion de la clé dans la base de données (à adapter en INSERT si besoin)
+$stmt = $dbh->prepare("UPDATE membres SET cle=:cle WHERE nom like :nom");
+$stmt->bindParam(':cle', $cle);
+$stmt->bindParam(':nom', $nom);
+$stmt->execute();
+ 
+ 
+// Préparation du mail contenant le lien d'activation
+$destinataire = $mail;
+$sujet = "Activer votre compte" ;
+$entete = "From: mregnaut.esgi@gmail.com" ;
+
+$message = 'Bienvenue sur Country Park,
+ 
+Pour activer votre compte, veuillez cliquer sur le lien ci-dessous
+ou copier/coller dans votre navigateur Internet.
+ 
+http://votresite.com/activation.php?log='.urlencode($nom).'&cle='.urlencode($cle).'
+ 
+ 
+---------------
+Ceci est un mail automatique, Merci de ne pas y répondre.';
+ 
+ 
+mail($destinataire, $sujet, $message, $entete) ; // Envoi du mail
