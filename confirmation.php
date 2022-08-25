@@ -1,4 +1,9 @@
 <?php
+
+require_once 'includes/page_header.php';
+require_once 'includes/sections/navbar.php';
+require_once 'traitements/inscription_func.php';
+
  
 //...
 // Votre code
