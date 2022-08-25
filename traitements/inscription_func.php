@@ -57,7 +57,7 @@ $cle = md5(microtime(TRUE)*100000);
  
  
 // Insertion de la clé dans la base de données (à adapter en INSERT si besoin)
-$stmt = $dbh->prepare("UPDATE membres SET cle=:cle WHERE nom like :nom");
+$stmt = $dbh->prepare("UPDATE utilisateurs SET cle=:cle WHERE nom like :nom");
 $stmt->bindParam(':cle', $cle);
 $stmt->bindParam(':nom', $nom);
 $stmt->execute();
