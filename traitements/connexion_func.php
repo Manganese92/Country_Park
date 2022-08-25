@@ -7,13 +7,16 @@ function traiter_connexion($email, $motdepasse) {
         return "Nom d'utilisateur ou mot de passe invalide";
     }
 
+    if($actif == '0') {
+        return "Votre compte n'est pas actif";
+  }
+
+    print_r($user);
+
     if (!password_verify($motdepasse, $user['motdepasse'])) {
         return "Nom d'utilisateur ou mot de passe invalide";
     }
 
-    if($actif == '0') {
-        return "Votre compte n'est pas actif";
-  }
 
     $_SESSION['id'] = $user['id'];
     $_SESSION['email'] = $user['email'];
