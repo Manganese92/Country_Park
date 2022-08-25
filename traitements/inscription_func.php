@@ -55,9 +55,9 @@ $login = $_POST['login'];
 // Génération aléatoire d'une clé
 $cle = md5(microtime(TRUE)*100000);
  
- 
+$pdo = get_connexion_pdo();
 // Insertion de la clé dans la base de données (à adapter en INSERT si besoin)
-$stmt = $dbh->prepare("UPDATE utilisateurs SET cle=:cle WHERE nom like :nom");
+$stmt = $pdo->prepare("UPDATE utilisateurs SET cle=:cle WHERE nom like :nom");
 $stmt->bindParam(':cle', $cle);
 $stmt->bindParam(':nom', $nom);
 $stmt->execute();
