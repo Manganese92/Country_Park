@@ -25,9 +25,10 @@ function get_utilisateur_by_id($id) {
 function creer_nouvel_utilisateur($nom, $email, $motdepasse) {
     $pdo = get_connexion_pdo();
 
-    $queryPrepare = $pdo->prepare("INSERT INTO utilisateurs (nom, email, motdepasse) values (:nom, :email, :motdepasse)");
+    $queryPrepare = $pdo->prepare("INSERT INTO utilisateurs (nom, email, motdepasse, cle) values (:nom, :email, :motdepasse, :cle)");
     $queryPrepare->bindParam(':nom', $nom);
     $queryPrepare->bindParam(':email', $email);
+    $queryPrepare->bindParam(':cle', $cle);
     $queryPrepare->bindParam(':motdepasse', password_hash($motdepasse, PASSWORD_DEFAULT));
     $queryPrepare->execute();
 }

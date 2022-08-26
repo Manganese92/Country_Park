@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $motdepasse = $_POST['motdepasse'];
     
-    $erreur = traiter_connexion($email, $motdepasse);
+    $erreur = traiter_connexion($email, $motdepasse,);
 }
 ?>
 

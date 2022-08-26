@@ -7,9 +7,9 @@ function traiter_connexion($email, $motdepasse) {
         return "Nom d'utilisateur ou mot de passe invalide";
     }
 
-    if($actif == '0') {
+    if(!isset ($user['statut'])) {
         return "Votre compte n'est pas actif";
-  }
+    }
 
     print_r($user);
 

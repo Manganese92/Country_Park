@@ -1,6 +1,7 @@
 <?php
 require_once 'includes/db/utilisateurs.sql.php';
 
+
 function validation_inscription($nom, $email, $mot_de_passe, $mot_de_passe_bis) {
     $erreurs = array();
 
@@ -36,48 +37,32 @@ function traiter_inscription($nom, $email, $motdepasse) {
     if (!empty($userExist)) {
         return array('email' => "L'email existe déjà");
     } else {
-        creer_nouvel_utilisateur($nom, $email, $motdepasse);
-        $newUser = get_utilisateur($email);
 
-        $_SESSION['id'] = $newUser['id'];
-        $_SESSION['email'] = $newUser['email'];
+        // Génération aléatoire d'une clé
+        $cle = md5(microtime(TRUE)*100000);
+                
+        creer_nouvel_utilisateur($nom, $email, $motdepasse, $cle);
 
-        header("location: index.php");
+        // Préparation du mail contenant le lien d'activation
+        $destinataire = $email;
+        $sujet = "Activer votre compte" ;
+        $entete = "From: mregnaut.esgi@gmail.com" ;
+
+        $message = 'Bienvenue sur Country Park,
+        
+        Pour activer votre compte, veuillez cliquer sur le lien ci-dessous
+        ou copier/coller dans votre navigateur Internet.
+        
+        http://localhost/Country_park/confirmation.php?nom='.urlencode($nom).'&cle='.urlencode($cle).'
+        
+        ---------------
+        Ceci est un mail automatique, Merci de ne pas y répondre.';
+        
+        mail($destinataire, $sujet, $message, $entete) ; // Envoi du mail
+
+        header("location: inscription_valid.php");
     }
     return array();
 }
 
-
-// Récupération des variables nécessaires au mail de confirmation    
-$email = $_POST['mail'];
-$login = $_POST['login'];
  
-// Génération aléatoire d'une clé
-$cle = md5(microtime(TRUE)*100000);
- 
-$pdo = get_connexion_pdo();
-// Insertion de la clé dans la base de données (à adapter en INSERT si besoin)
-$stmt = $pdo->prepare("UPDATE utilisateurs SET cle=:cle WHERE nom like :nom");
-$stmt->bindParam(':cle', $cle);
-$stmt->bindParam(':nom', $nom);
-$stmt->execute();
- 
- 
-// Préparation du mail contenant le lien d'activation
-$destinataire = $mail;
-$sujet = "Activer votre compte" ;
-$entete = "From: mregnaut.esgi@gmail.com" ;
-
-$message = 'Bienvenue sur Country Park,
- 
-Pour activer votre compte, veuillez cliquer sur le lien ci-dessous
-ou copier/coller dans votre navigateur Internet.
- 
-http://votresite.com/activation.php?log='.urlencode($nom).'&cle='.urlencode($cle).'
- 
- 
----------------
-Ceci est un mail automatique, Merci de ne pas y répondre.';
- 
- 
-mail($destinataire, $sujet, $message, $entete) ; // Envoi du mail
