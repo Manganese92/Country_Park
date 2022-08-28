@@ -33,4 +33,16 @@ function creer_nouvel_utilisateur($nom, $email, $motdepasse) {
     $queryPrepare->execute();
 }
 
+
+function liste_utilisateur($nom, $email, $statut) {
+    $pdo = get_connexion_pdo();
+
+    $queryPrepare = $pdo->prepare("INSERT INTO utilisateurs (nom, email, statut) values (:nom, :email, :statut)");
+    $queryPrepare->bindParam(':nom', $nom);
+    $queryPrepare->bindParam(':email', $email);
+    $queryPrepare->bindParam(':cle', $cle);
+    $queryPrepare->bindParam(':statut', $statut);
+    $queryPrepare->execute();
+}
+
 ?>
