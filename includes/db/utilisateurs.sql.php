@@ -11,6 +11,17 @@ function get_utilisateur($email) {
     return $queryPrepare->fetch();
 }
 
+function get_utilisateur_by_id($id) {
+    $pdo = get_connexion_pdo();
+
+    $queryPrepare = $pdo->prepare("SELECT * FROM utilisateurs WHERE id = :id");
+    $queryPrepare->bindParam(':id', $id);
+    $queryPrepare->execute();
+
+    return $queryPrepare->fetch();
+}
+
+
 function creer_nouvel_utilisateur($nom, $email, $motdepasse) {
     $pdo = get_connexion_pdo();
 

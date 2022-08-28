@@ -1,7 +1,7 @@
 <nav class="p-3 mb-4 border-bottom fixed-top bg-light mb-xs-5">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="<?= ROOT_PATH ?>index.php" class="text-dark text-decoration-none mb-sm-1">
+            <a href="<?= BASE_URL ?>index.php" class="text-dark text-decoration-none mb-sm-1">
                 <span class="fs-6 d-lg-none">Country Park</span>
                 <span class="fs-4 d-lg-block d-none">Country Park</span>
             </a>

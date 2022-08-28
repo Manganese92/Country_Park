@@ -1,5 +1,8 @@
-<?php session_start(); ?>
-<?php define('ROOT_PATH', dirname(__DIR__) . '/'); ?>
+<?php 
+session_start();
+define('ROOT_PATH', dirname(__DIR__) . '/');
+define('BASE_URL', '/www/Country_Park/');
+?>
 
 <!doctype html>
 <html lang="fr">
@@ -18,8 +21,7 @@
 
 
   <!-- Custom styles for this template -->
-  <link href="<?= ROOT_PATH ?>assets/styles/main.css" rel="stylesheet">
+  <link href="<?= BASE_URL ?>assets/styles/main.css" rel="stylesheet">
 </head>
 
 <body>
-    
