@@ -7,7 +7,7 @@ if (is_user_connected()) {
 ?>
     <div class="dropdown text-end">
         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://github.com/willf80.png" alt="willf80" width="32" height="32" class="rounded-circle">
+            <img src="https://github.com/Manganese92.png" alt="willf80" width="32" height="32" class="rounded-circle">
             <?= $user['nom'] ?>
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
@@ -24,7 +24,7 @@ if (is_user_connected()) {
 ?>
     <div class="dropdown text-end">
         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://github.com/willf80.png" alt="willf80" width="32" height="32" class="rounded-circle">
+            <img src="https://eyeklinik.com/en/wp-content/uploads/sites/3/2019/10/26-268559_profile-picture-placeholder-round-1.png" alt="willf80" width="32" height="32" class="rounded-circle">
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
             <li><a class="dropdown-item fw-bold" href="<?= BASE_URL ?>inscription.php">Inscription</a></li>
