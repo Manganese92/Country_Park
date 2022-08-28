@@ -7,7 +7,7 @@ $utilisateurs = liste_utilisateur();
 ?>
 <div class="container-fluid">
   <div class="row">
-    <?php //include_once(ROOT_PATH . 'includes/sections/admin_sidebar.php') 
+    <?php include_once('../includes/sections/admin_sidebar.php') 
     ?>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">

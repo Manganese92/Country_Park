@@ -1,5 +1,6 @@
 <?php
-function navMenuActive($link) {
+function navMenuActive($link)
+{
     return str_contains(strtolower($_SERVER['REQUEST_URI']), strtolower($link)) ? 'active' : '';
 }
 ?>
