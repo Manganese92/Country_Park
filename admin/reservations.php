@@ -50,7 +50,7 @@ require_once '../includes/db/biens.sql.php';
                 <?php
                 $bien = get_bien_by_id($reservation['bienId']);
                 ?>
-                <a class="text-decoration-none text-dark" href="<?= 'bien.php?id=' . $bien['id'] ?>"><?= $bien['libelle']; ?> <i class="fa-solid fa-up-right-from-square"></i></a>
+                <a class="text-decoration-none text-dark" href="<?= BASE_URL.'bien.php?id=' . $bien['id'] ?>"><?= $bien['libelle']; ?> <i class="fa-solid fa-up-right-from-square"></i></a>
               </td>
               <td><?= date_format(date_create($reservation['arrivee']), 'd M Y') ?></td>
               <td><?= date_format(date_create($reservation['depart']), 'd M Y') ?></td>
