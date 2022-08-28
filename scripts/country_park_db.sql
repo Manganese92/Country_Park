@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : dim. 28 août 2022 à 14:42
--- Version du serveur : 10.4.24-MariaDB
--- Version de PHP : 8.1.6
+-- Hôte : localhost
+-- Généré le : dim. 28 août 2022 à 23:32
+-- Version du serveur : 10.4.22-MariaDB
+-- Version de PHP : 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43,7 +43,7 @@ CREATE TABLE `biens` (
 --
 
 INSERT INTO `biens` (`id`, `libelle`, `datedebut`, `datefin`, `prix`, `descriptions`, `capacite`, `typebien`) VALUES
-(2, 'Caravane pas chère (DB) au minicamping Zeeland', '2022-08-28', '2022-11-06', '35.00', 'Basecamp à IJmuiden est un Tiny House Eco Resort avec 33 Tiny Houses uniques. ÖÖD Suite est l&#039;une des premières maisons miroirs, caractérisée par le minimalisme scandinave. Ici, vous êtes un avec la nature. La maison est complètement immergée dans l&#039;environnement. Les oiseaux ne remarqueront même pas que vous êtes là et continueront leur chanson pendant que vous préparez le petit déjeuner. Visitez nos partenaires à la plage ou commandez votre nourriture en ligne car les ÖÖD Suites n&#039;ont pas de cuisine. Demandez-nous quelques suggestions savoureuses!\r\n\r\nLe logement\r\n- Le linge de maison et les serviettes d&#039;hôtel sont inclus.\r\n- Huile d&#039;olive, poivre et sel et un peu de café pour commencer sont fournis.\r\n- Les chiens ne sont pas autorisés.', 5, 2),
+(2, 'Caravane pas chère (DB) au minicamping Zeeland', '2022-08-28', '2022-11-06', '35.00', 'Basecamp à IJmuiden est un Tiny House Eco Resort avec 33 Tiny Houses uniques. ÖÖD Suite est l&#039;une des premières maisons miroirs, caractérisée par le minimalisme scandinave. Ici, vous êtes un avec la nature. La maison est complètement immergée dans l&#039;environnement. Les oiseaux ne remarqueront même pas que vous êtes là et continueront leur chanson pendant que vous préparez le petit déjeuner. Visitez nos partenaires à la plage ou commandez votre nourriture en ligne car les ÖÖD Suites n&#039;ont pas de cuisine. Demandez-nous quelques suggestions savoureuses!\r\n\r\nLe logement\r\n- Le linge de maison et les serviettes d&#039;hôtel sont inclus.\r\n- Huile d&#039;olive, poivre et sel et un peu de café pour commencer sont fournis.\r\n- Les chiens ne sont pas autorisés.', 6, 2),
 (3, 'Sleep Under The Stars, La Prairie Étoilée Glamping', '2022-08-27', '2022-09-22', '130.00', '', 2, 2),
 (4, 'La Vue - les vues les plus incroyables !', '2022-08-27', '2022-10-21', '204.25', '', 2, 4),
 (5, 'Chambre d\'hôtes caravane dans un charmant Moulin', '2022-08-01', '2022-09-30', '99.00', '', 0, 1),
@@ -89,7 +89,52 @@ INSERT INTO `reservations` (`id`, `arrivee`, `depart`, `voyageurs`, `prix`, `bie
 (3, '2022-08-14', '2022-08-27', 1, '100.65', 6, 1),
 (4, '2022-08-28', '2022-08-31', 5, '35.00', 2, 1),
 (5, '2022-09-02', '2022-09-10', 2, '47.00', 7, 1),
-(6, '2022-09-02', '2022-09-22', 2, '204.25', 4, 2);
+(6, '2022-08-28', '2022-09-02', 3, '65.99', 9, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `reservation_services`
+--
+
+CREATE TABLE `reservation_services` (
+  `reservationId` int(11) NOT NULL,
+  `serviceId` int(11) NOT NULL,
+  `datecreation` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Déchargement des données de la table `reservation_services`
+--
+
+INSERT INTO `reservation_services` (`reservationId`, `serviceId`, `datecreation`) VALUES
+(6, 5, '2022-08-28 21:18:33'),
+(6, 7, '2022-08-28 21:18:33');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `services`
+--
+
+CREATE TABLE `services` (
+  `id` int(11) NOT NULL,
+  `libelle` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `prix` decimal(10,2) NOT NULL,
+  `bienId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Déchargement des données de la table `services`
+--
+
+INSERT INTO `services` (`id`, `libelle`, `prix`, `bienId`) VALUES
+(2, 'Nettoyage après départ', '45.00', 2),
+(3, 'Climatisation centrale', '10.00', 2),
+(4, 'Lave-linge : dans l&#039;immeuble', '1.00', 2),
+(5, 'Nettoyage après départ', '15.00', 9),
+(7, 'Lave-linge : dans l&#039;immeuble', '9.00', 9),
+(8, 'Lave-linge : dans l&#039;immeuble', '9.59', 9);
 
 -- --------------------------------------------------------
 
@@ -163,6 +208,12 @@ ALTER TABLE `reservations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Index pour la table `typebiens`
 --
 ALTER TABLE `typebiens`
@@ -196,6 +247,12 @@ ALTER TABLE `commentaires`
 --
 ALTER TABLE `reservations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT pour la table `services`
+--
+ALTER TABLE `services`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `typebiens`

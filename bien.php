@@ -4,6 +4,7 @@ require_once 'includes/sections/navbar.php';
 require_once 'includes/db/biens.sql.php';
 require_once 'includes/db/type-biens.sql.php';
 require_once 'includes/db/reservation.sql.php';
+require_once 'includes/db/services.sql.php';
 ?>
 
 <?php
@@ -21,14 +22,15 @@ $typeBien = get_type_bien_by_id($bien['typebien']);
 $arrivee = '';
 $depart = '';
 $voyageurs = 1;
-$services = array();
+$servicesSelected = array();
+$services = get_services_by_id($bien['id']);
 $reservationOk = false;
 
 if (isset($_SESSION['reservation'])) {
     $arrivee = $_SESSION['reservation']['dateDebut'];
     $depart = $_SESSION['reservation']['dateFin'];
     $voyageurs = $_SESSION['reservation']['voyageurs'];
-    $services = isset($_SESSION['reservation']['services']) ? $_SESSION['reservation']['services'] : array();
+    $servicesSelected = isset($_SESSION['reservation']['services']) ? $_SESSION['reservation']['services'] : array();
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -40,9 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $arrivee = $_POST['dateDebut'];
         $depart = $_POST['dateFin'];
         $voyageurs = $_POST['voyageurs'];
-        $services = isset($_POST['services']) ? $_POST['services'] : array();
+        $servicesSelected = isset($_POST['services']) ? $_POST['services'] : array();
 
-        reserver($arrivee, $depart, $voyageurs, $bien, $services);
+        reserver($arrivee, $depart, $voyageurs, $bien, $servicesSelected);
         unset($_SESSION['reservation']);
         $reservationOk = true;
     }
@@ -86,9 +88,18 @@ if ($reservationOk) {
                 <div class="mt-4">
                     <h5>Services ajoutés</h5>
                     <ul>
-                        <li>Services 1</li>
-                        <li>Services 2</li>
-                        <li>Services 3</li>
+                        <?php
+                        if (empty($services)) {
+                        ?>
+                            <p class="badge bg-secondary">Aucun service ajouté</p>
+                        <?php
+                        }
+                        foreach ($services as $service) {
+                        ?>
+                            <li><?= $service['libelle'] ?></li>
+                        <?php
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>
@@ -123,11 +134,32 @@ if ($reservationOk) {
                                     </div>
                                 </div>
 
-                                <p class="fw-bold">Services ajoutés</p>
+
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><input type="checkbox" class="me-2" name="services[]" value="1" />Cras justo odio</li>
-                                    <li class="list-group-item"><input type="checkbox" class="me-2" name="services[]" value="2" />Dapibus ac facilisis in</li>
-                                    <li class="list-group-item"><input type="checkbox" class="me-2" name="services[]" value="3" />Vestibulum at eros</li>
+                                    <?php
+                                    if (empty($services)) {
+                                    ?>
+                                        <p class="badge bg-secondary">Aucun service ajouté</p>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <p class="fw-bold">Services ajoutés</p>
+                                    <?php
+                                    }
+                                    foreach ($services as $service) {
+                                    ?>
+                                        <label class="li list-group-item" for="<?= 'service' . $service['id'] ?>">
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <input type="checkbox" <?= isset($servicesSelected) && in_array($service['id'], $servicesSelected) ? 'checked' : '' ?> id="<?= 'service' . $service['id'] ?>" class="me-2 services" name="services[]" value="<?= $service['id'] ?>" data-prix="<?= $service['prix'] ?>" />
+                                                    <span><?= $service['libelle'] ?></span>
+                                                </div>
+                                                <span><?= $service['prix'] ?> €</span>
+                                            </div>
+                                        </label>
+                                    <?php
+                                    }
+                                    ?>
                                 </ul>
                             </div>
 
@@ -138,12 +170,11 @@ if ($reservationOk) {
 
                             <div class="mb-4 mt-4">
                                 <div class="d-flex flex-row justify-content-between mb-3"><span class="text-decoration-underline" id="prix" data-prix="<?= $bien['prix'] ?>"><?= $bien['prix'] ?> x <span id="nbreNuits">0 nuits</span></span><span id="totalPrix">0 €</span></div>
-                                <div class="d-flex flex-row justify-content-between mb-3"><span class="text-decoration-underline">Frais de service</span><span>0 €</span></div>
-                                <div class="d-flex flex-row justify-content-between mb-3"><span class="text-decoration-underline">Taxes de séjour et frais</span><span>9 €</span></div>
+                                <div class="d-flex flex-row justify-content-between mb-3"><span class="text-decoration-underline">Services ajoutés</span><span id="serviceTotal">0 €</span></div>
                             </div>
 
                             <hr class="mb-3" />
-                            <div class="d-flex flex-row justify-content-between fw-bold h5"><span>Total</span><span id="total">9 €</span></div>
+                            <div class="d-flex flex-row justify-content-between fw-bold h5"><span>Total</span><span id="total">0 €</span></div>
                         </form>
                     </div>
                 </div>
@@ -205,6 +236,7 @@ if ($reservationOk) {
             const prix = document.querySelector("#prix");
             const totalPrix = document.querySelector("#totalPrix");
             const btnReserver = document.querySelector("#btnReserver");
+            document.querySelectorAll(".services").forEach(s => s.onchange = update);
 
             let dateDebut, dateFin, nbreVoyageurs;
             update();
@@ -221,15 +253,23 @@ if ($reservationOk) {
                 dateFin = new Date(dateFinElem.value);
                 nbreVoyageurs = new Date(voyageursElem.value);
 
+                const totalServices = [...document.querySelectorAll(".services")]
+                    .filter(x => x.checked)
+                    .map(x => +x.dataset.prix)
+                    .reduce((sum, x) => sum + x, 0);
+
                 if ([dateDebut.toString(), dateFin.toString()].every(x => !x.includes('Invalid'))) {
                     const dateDiff = dateFin.getTime() - dateDebut.getTime();
                     nuits = dateDiff / 24 / 60 / 60 / 1000;
                     valid = dateDiff > 0;
 
-                    nbreNuits.textContent = `${nuits} nuits`;
-                    const totalPrixNuits = Math.floor(+prix.getAttribute('data-prix') * nuits * 100)/100;
-                    totalPrix.textContent = `${totalPrixNuits} €`;
-                    document.querySelector("#total").textContent = `${totalPrixNuits + 9} €`;
+                    nbreNuits.textContent = `${nuits > 0 ? nuits : 0} nuits`;
+                    const totalPrixNuits = Math.floor(+prix.getAttribute('data-prix') * nuits * 100) / 100;
+                    totalPrix.textContent = `${totalPrixNuits > 0 ? totalPrixNuits : 0} €`;
+                    document.querySelector("#serviceTotal").textContent = `${+totalServices} €`;
+
+                    const totaux = totalPrixNuits + totalServices;
+                    document.querySelector("#total").textContent = `${totaux  > 0 ? totaux : 0} €`;
                 }
 
                 valid = valid && nbreVoyageurs > 0 && nuits > 0;
