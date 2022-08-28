@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost
--- Généré le : dim. 28 août 2022 à 12:42
--- Version du serveur : 10.4.22-MariaDB
--- Version de PHP : 8.1.2
+-- Hôte : 127.0.0.1
+-- Généré le : dim. 28 août 2022 à 14:42
+-- Version du serveur : 10.4.24-MariaDB
+-- Version de PHP : 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -54,6 +54,18 @@ INSERT INTO `biens` (`id`, `libelle`, `datedebut`, `datefin`, `prix`, `descripti
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `commentaires`
+--
+
+CREATE TABLE `commentaires` (
+  `note` int(5) NOT NULL,
+  `id` int(255) NOT NULL,
+  `message` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `reservations`
 --
 
@@ -76,7 +88,8 @@ INSERT INTO `reservations` (`id`, `arrivee`, `depart`, `voyageurs`, `prix`, `bie
 (2, '2022-08-27', '2022-09-10', 4, '204.25', 4, 1),
 (3, '2022-08-14', '2022-08-27', 1, '100.65', 6, 1),
 (4, '2022-08-28', '2022-08-31', 5, '35.00', 2, 1),
-(5, '2022-09-02', '2022-09-10', 2, '47.00', 7, 1);
+(5, '2022-09-02', '2022-09-10', 2, '47.00', 7, 1),
+(6, '2022-09-02', '2022-09-22', 2, '204.25', 4, 2);
 
 -- --------------------------------------------------------
 
@@ -123,7 +136,8 @@ CREATE TABLE `utilisateurs` (
 --
 
 INSERT INTO `utilisateurs` (`id`, `nom`, `email`, `motdepasse`, `datecreation`, `datemiseajour`, `cle`, `statut`) VALUES
-(1, 'WILLY', 'willyfkouadio@gmail.com', '$2y$10$xbZnMTSSowC2teQFJRASY.n1kwsbXNFotzKVSd8ThaJspI9.Flca6', '2022-08-21 20:44:29', '2022-08-21 20:44:29', NULL, NULL);
+(1, 'WILLY', 'willyfkouadio@gmail.com', '$2y$10$xbZnMTSSowC2teQFJRASY.n1kwsbXNFotzKVSd8ThaJspI9.Flca6', '2022-08-21 20:44:29', '2022-08-21 20:44:29', NULL, 1),
+(2, 'Morgane Regnaut', 'morgane.regnaut@numericable.com', '$2y$10$AnwwEtuqZMjC/55GQQA4HOSdFfnuEwnqS1CLMRy6ll2hQVfhCG9qu', '2022-08-28 12:51:16', '2022-08-28 12:51:16', NULL, 1);
 
 --
 -- Index pour les tables déchargées
@@ -135,6 +149,12 @@ INSERT INTO `utilisateurs` (`id`, `nom`, `email`, `motdepasse`, `datecreation`, 
 ALTER TABLE `biens`
   ADD PRIMARY KEY (`id`),
   ADD KEY `biens_libelle_index` (`libelle`);
+
+--
+-- Index pour la table `commentaires`
+--
+ALTER TABLE `commentaires`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `reservations`
@@ -166,10 +186,16 @@ ALTER TABLE `biens`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT pour la table `commentaires`
+--
+ALTER TABLE `commentaires`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `typebiens`
@@ -181,7 +207,7 @@ ALTER TABLE `typebiens`
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
