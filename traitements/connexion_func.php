@@ -7,8 +7,6 @@ function traiter_connexion($email, $motdepasse) {
         return "Nom d'utilisateur ou mot de passe invalide";
     }
 
-    print_r($user);
-
     if (!password_verify($motdepasse, $user['motdepasse'])) {
         return "Nom d'utilisateur ou mot de passe invalide";
     }
@@ -16,5 +14,10 @@ function traiter_connexion($email, $motdepasse) {
     $_SESSION['id'] = $user['id'];
     $_SESSION['email'] = $user['email'];
 
-    header("location: index.php");
+    if (isset($_SESSION['redirect_after_connexion'])) {
+        header("location: " . $_SESSION['redirect_after_connexion']);
+        unset($_SESSION['redirect_after_connexion']);
+    } else {
+        header("location: index.php");
+    }
 }

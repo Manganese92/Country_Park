@@ -11,13 +11,30 @@ $typeBien = get_type_bien_by_id($_GET['edit']);
     </div>
 </div>
 
-<form method="POST" action="typebiens.php">
+<?php
+$erreur = '';
+$nom = '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nom = htmlspecialchars(trim($_POST['nom']));
+    $id = htmlspecialchars(trim($_POST['id']));
+    if (strlen($nom) <= 2) {
+        $erreur = 'Nom invalide';
+    } else {
+        update_type_bien($id, $nom);
+        header("location: typebiens.php");
+    }
+}
+?>
+
+<form method="POST" action="typebiens.php?action=edit&edit=<?= $typeBien['id'] ?>">
     <div class="row">
         <div class="col-6">
             <div class="form-outline flex-fill mb-0">
                 <label class="form-label mb-1" for="nom">Libelle</label>
-                <input type="text" id="nom" name="nom" class="form-control" value="<?= $typeBien['libelle'] ?>" required />
+                <input type="text" id="nom" name="nom" class="form-control <?= empty($erreur) ? '' : 'is-invalid' ?>" value="<?= $typeBien['libelle'] ?>" required />
                 <input type="hidden" id="id" name="id" class="form-control" value="<?= $typeBien['id'] ?>" required />
+                <div class="invalid-feedback"><?= $erreur ?></div>
             </div>
         </div>
     </div>
