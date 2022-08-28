@@ -11,7 +11,7 @@ if (is_user_connected()) {
             <?= $user['nom'] ?>
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-            <li><a class="dropdown-item" href="<?= BASE_URL ?>inscription.php">Profil</a></li>
+            <li><a class="dropdown-item" href="<?= BASE_URL ?>profil.php">Profil</a></li>
             <li><a class="dropdown-item" href="<?= BASE_URL ?>reservation.php">Mes réservations</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="<?= BASE_URL ?>admin/dashboard.php">Administration</a></li>
