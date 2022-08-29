@@ -10,7 +10,7 @@ require 'includes/sections/navbar.php';
 
         <h2 class="text-center">Page introuvable !</h2>
 
-        <a href="index.php" class="text-dark d-block mt-4">Retour à la page d'accueil</a>
+        <a href="<?= ROOT_PATH. 'index.php' ?>" class="text-dark d-block mt-4">Retour à la page d'accueil</a>
     </div>
 </div>
 

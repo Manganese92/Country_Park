@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : lun. 29 août 2022 à 11:21
+-- Généré le : lun. 29 août 2022 à 12:14
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.1.2
 
@@ -121,7 +121,6 @@ INSERT INTO `services` (`id`, `libelle`, `prix`, `bienId`) VALUES
 (3, 'Climatisation centrale', '10.00', 2),
 (4, 'Lave-linge : dans l&#039;immeuble', '1.00', 2),
 (5, 'Nettoyage après départ', '15.00', 9),
-(7, 'Lave-linge : dans l&#039;immeuble', '9.00', 9),
 (8, 'Lave-linge : dans l&#039;immeuble', '9.59', 9);
 
 -- --------------------------------------------------------
@@ -187,12 +186,6 @@ ALTER TABLE `biens`
 -- Index pour la table `reservations`
 --
 ALTER TABLE `reservations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `services`
---
-ALTER TABLE `services`
   ADD PRIMARY KEY (`id`);
 
 --
