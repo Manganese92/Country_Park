@@ -1,7 +1,6 @@
 <?php
 require 'includes/page_header.php';
 require 'includes/sections/navbar.php';
-require_once 'includes/db/utilisateurs.sql.php';
 ?>
 
 <div>
