@@ -211,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="row">
                         <div class="col-12">
                             <div class="form-outline flex-fill mb-0">
-                                <label class="form-label mb-1" for="capacite">Libelle</label>
+                                <label class="form-label mb-1" for="serviceLibelle">Libelle</label>
                                 <input type="text" id="serviceLibelle" name="serviceLibelle" class="form-control" required />
                                 <input type="hidden" id="serviceBienId" name="serviceBienId" class="form-control" value="<?= $id ?>" />
                             </div>

@@ -31,7 +31,7 @@ function create_type_bien($nom) {
 function update_type_bien($id, $nom) {
     $pdo = get_connexion_pdo();
 
-    $query = $pdo->prepare("UPDATE typebiens SET libelle = :nom WHERE id = :id");
+    $query = $pdo->prepare("UPDATE typebiens SET libelle = :nom, datemiseajour = now() WHERE id = :id");
     $query->bindParam(":id", $id);
     $query->bindParam(":nom", $nom);
     $query->execute();

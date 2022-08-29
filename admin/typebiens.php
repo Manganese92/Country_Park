@@ -2,7 +2,11 @@
 require_once '../includes/page_header.php';
 require_once ROOT_PATH . 'includes/sections/admin_navbar.php';
 require_once ROOT_PATH . 'includes/db/type-biens.sql.php';
+require_once ROOT_PATH . 'includes/db/utilisateurs.sql.php';
 
+if (!is_admin_connected()) {
+  header('location: '.ROOT_PATH.'403.php');
+}
 ?>
 <div class="container-fluid">
   <div class="row">
