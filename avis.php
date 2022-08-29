@@ -2,7 +2,7 @@
     <div class="container text-center">
         <form id="userThreadComment" method="POST" action="./addThreadComment.php?current=<?php echo $current ?>" enctype="multipart/form-data" class="pt-2">
             <div class="row pt-3">
-                <h5 class="formTitles">Commentaire</h5>
+                <h5 class="formTitles">Commentaires</h5>
                 <div class="col"></div>
                 <div class="col-10">
                     <div class="row" style="height: 100px;">
