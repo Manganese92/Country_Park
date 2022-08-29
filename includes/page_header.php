@@ -1,7 +1,7 @@
 <?php 
 session_start();
 define('ROOT_PATH', dirname(__DIR__) . '/');
-define('BASE_URL', '/www/Country_Park/');
+define('BASE_URL', '/Country_Park/');
 ?>
 
 <!doctype html>
