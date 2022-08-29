@@ -1,6 +1,6 @@
 <?php
-require_once ROOT_PATH."includes/db/utilisateurs.sql.php";
-require_once ROOT_PATH."includes/db/reservation.sql.php";
+require_once ROOT_PATH . "includes/db/utilisateurs.sql.php";
+require_once ROOT_PATH . "includes/db/reservation.sql.php";
 
 if (is_user_connected()) {
     $user = get_utilisateur($_SESSION['email']);
@@ -13,9 +13,19 @@ if (is_user_connected()) {
         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
             <li><a class="dropdown-item" href="<?= BASE_URL ?>profil.php">Profil</a></li>
             <li><a class="dropdown-item" href="<?= BASE_URL ?>reservation.php">Mes réservations</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<?= BASE_URL ?>admin/dashboard.php">Administration</a></li>
-            <li><hr class="dropdown-divider"></li>
+            <?php
+            if (is_admin_connected()) {
+            ?>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="<?= BASE_URL ?>admin/dashboard.php">Administration</a></li>
+            <?php
+            }
+            ?>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
             <li><a class="dropdown-item" href="<?= BASE_URL ?>deconnexion.php">Se déconnecter</a></li>
         </ul>
     </div>

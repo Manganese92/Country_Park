@@ -196,10 +196,10 @@ if ($reservationOk) {
                     <div class="col-lg-6 col-md-12 mt-4">
                         <div class="d-flex flex-row">
                             <a href="#" class="d-block link-dark text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://github.com/willf80.png" alt="willf80" width="48" height="48" class="rounded-circle">
+                                <img src="https://github.com/Manganese92.png" alt="Manganese92" width="48" height="48" class="rounded-circle">
                             </a>
                             <div class="ms-2 align-self-center">
-                                <p class="h6 m-0 mb-1">WILLY</p>
+                                <p class="h6 m-0 mb-1">Morgane</p>
                                 <p class="m-0 text-muted">août 2022</p>
                             </div>
                         </div>
@@ -210,10 +210,10 @@ if ($reservationOk) {
                     <div class="col-lg-6 col-md-12 mt-4">
                         <div class="d-flex flex-row">
                             <a href="#" class="d-block link-dark text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://github.com/willf80.png" alt="willf80" width="48" height="48" class="rounded-circle">
+                                <img src="https://github.com/Manganese92.png" alt="Manganese92" width="48" height="48" class="rounded-circle">
                             </a>
                             <div class="ms-2 align-self-center">
-                                <p class="h6 m-0 mb-1">WILLY</p>
+                                <p class="h6 m-0 mb-1">Morgane</p>
                                 <p class="m-0 text-muted">août 2022</p>
                             </div>
                         </div>
@@ -268,7 +268,7 @@ if ($reservationOk) {
                     totalPrix.textContent = `${totalPrixNuits > 0 ? totalPrixNuits : 0} €`;
                     document.querySelector("#serviceTotal").textContent = `${+totalServices} €`;
 
-                    const totaux = totalPrixNuits + totalServices;
+                    const totaux = Math.floor((totalPrixNuits + totalServices) * 100) / 100;
                     document.querySelector("#total").textContent = `${totaux  > 0 ? totaux : 0} €`;
                 }
 

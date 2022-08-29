@@ -33,6 +33,31 @@ function creer_nouvel_utilisateur($nom, $email, $motdepasse) {
     $queryPrepare->execute();
 }
 
+function modifier_utilisateur($id, $nom, $profil) {
+    $pdo = get_connexion_pdo();
+
+    $userProfil = $profil;
+    if (!isset($profil)) {
+        $user = get_utilisateur_by_id($id);
+        $userProfil = $user['profil'];
+    }
+
+    $queryPrepare = $pdo->prepare("UPDATE utilisateurs SET nom = :nom, profil = :profil, datemiseajour = now() WHERE id = :id");
+    $queryPrepare->bindParam(':id', $id);
+    $queryPrepare->bindParam(':nom', $nom);
+    $queryPrepare->bindParam(':profil', $userProfil);
+    $queryPrepare->execute();
+}
+
+function is_admin_connected() {
+	if (!is_user_connected()) {
+		return false;
+	}
+
+    $ADMIN_ID = 1;
+	$user = get_utilisateur_by_id($_SESSION['id']);
+    return $user['profil'] == $ADMIN_ID;
+}
 
 function liste_utilisateur() {
     $pdo = get_connexion_pdo();

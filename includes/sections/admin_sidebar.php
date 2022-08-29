@@ -22,7 +22,6 @@ function navMenuActive($link)
                 <a class="nav-link <?= navMenuActive('admin/reservations.php') ?>" href="<?= BASE_URL ?>admin/reservations.php"> <i class="fa-solid fa-hotel"></i> Réservations </a>
             </li>
 
-
             <li class="nav-item">
                 <a class="nav-link <?= navMenuActive('admin/commentaires.php') ?> " href="<?= BASE_URL ?>admin/commentaires.php">
                     <i class="fa-solid fa-comment"></i>

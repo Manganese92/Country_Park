@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : dim. 28 août 2022 à 23:32
+-- Généré le : lun. 29 août 2022 à 11:21
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.1.2
 
@@ -54,25 +54,13 @@ INSERT INTO `biens` (`id`, `libelle`, `datedebut`, `datefin`, `prix`, `descripti
 -- --------------------------------------------------------
 
 --
--- Structure de la table `commentaires`
---
-
-CREATE TABLE `commentaires` (
-  `note` int(5) NOT NULL,
-  `id` int(255) NOT NULL,
-  `message` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `reservations`
 --
 
 CREATE TABLE `reservations` (
   `id` int(11) NOT NULL,
-  `arrivee` date NOT NULL,
-  `depart` date NOT NULL,
+  `arrivee` datetime NOT NULL,
+  `depart` datetime NOT NULL,
   `voyageurs` int(11) NOT NULL,
   `prix` decimal(10,2) NOT NULL,
   `bienId` int(11) NOT NULL,
@@ -84,12 +72,12 @@ CREATE TABLE `reservations` (
 --
 
 INSERT INTO `reservations` (`id`, `arrivee`, `depart`, `voyageurs`, `prix`, `bienId`, `userId`) VALUES
-(1, '2022-08-30', '2022-08-31', 3, '35.00', 2, 1),
-(2, '2022-08-27', '2022-09-10', 4, '204.25', 4, 1),
-(3, '2022-08-14', '2022-08-27', 1, '100.65', 6, 1),
-(4, '2022-08-28', '2022-08-31', 5, '35.00', 2, 1),
-(5, '2022-09-02', '2022-09-10', 2, '47.00', 7, 1),
-(6, '2022-08-28', '2022-09-02', 3, '65.99', 9, 1);
+(1, '2022-08-30 00:00:00', '2022-08-31 00:00:00', 3, '35.00', 2, 1),
+(2, '2022-08-27 00:00:00', '2022-09-10 00:00:00', 4, '204.25', 4, 1),
+(3, '2022-08-14 00:00:00', '2022-08-27 00:00:00', 1, '100.65', 6, 1),
+(4, '2022-08-28 00:00:00', '2022-08-31 00:00:00', 5, '35.00', 2, 1),
+(5, '2022-09-02 00:00:00', '2022-09-10 00:00:00', 2, '47.00', 7, 1),
+(6, '2022-08-28 00:00:00', '2022-09-02 00:00:00', 3, '65.99', 9, 1);
 
 -- --------------------------------------------------------
 
@@ -173,16 +161,16 @@ CREATE TABLE `utilisateurs` (
   `datecreation` datetime NOT NULL DEFAULT current_timestamp(),
   `datemiseajour` datetime NOT NULL DEFAULT current_timestamp(),
   `cle` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `statut` tinyint(1) DEFAULT NULL
+  `statut` tinyint(1) DEFAULT NULL,
+  `profil` int(10) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `utilisateurs`
 --
 
-INSERT INTO `utilisateurs` (`id`, `nom`, `email`, `motdepasse`, `datecreation`, `datemiseajour`, `cle`, `statut`) VALUES
-(1, 'WILLY', 'willyfkouadio@gmail.com', '$2y$10$xbZnMTSSowC2teQFJRASY.n1kwsbXNFotzKVSd8ThaJspI9.Flca6', '2022-08-21 20:44:29', '2022-08-21 20:44:29', NULL, 1),
-(2, 'Morgane Regnaut', 'morgane.regnaut@numericable.com', '$2y$10$AnwwEtuqZMjC/55GQQA4HOSdFfnuEwnqS1CLMRy6ll2hQVfhCG9qu', '2022-08-28 12:51:16', '2022-08-28 12:51:16', NULL, 1);
+INSERT INTO `utilisateurs` (`id`, `nom`, `email`, `motdepasse`, `datecreation`, `datemiseajour`, `cle`, `statut`, `profil`) VALUES
+(1, 'Compte Test Admin', 'test@gmail.com', '$2y$10$xbZnMTSSowC2teQFJRASY.n1kwsbXNFotzKVSd8ThaJspI9.Flca6', '2022-08-21 20:44:29', '2022-08-29 08:29:04', NULL, 1, 1);
 
 --
 -- Index pour les tables déchargées
@@ -194,12 +182,6 @@ INSERT INTO `utilisateurs` (`id`, `nom`, `email`, `motdepasse`, `datecreation`, 
 ALTER TABLE `biens`
   ADD PRIMARY KEY (`id`),
   ADD KEY `biens_libelle_index` (`libelle`);
-
---
--- Index pour la table `commentaires`
---
-ALTER TABLE `commentaires`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `reservations`
@@ -237,12 +219,6 @@ ALTER TABLE `biens`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT pour la table `commentaires`
---
-ALTER TABLE `commentaires`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT pour la table `reservations`
 --
 ALTER TABLE `reservations`
@@ -264,7 +240,7 @@ ALTER TABLE `typebiens`
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
